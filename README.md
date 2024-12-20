@@ -35,3 +35,8 @@ export TF_VAR_private_key_path <Mention the private key path >
 export TF_VAR_region <Mention the region>
 
 export TF_compartment_id_var <Mention the compartment id>
+
+For Remote Backend use the below Official Documentation 
+-------------------------------------------------------
+
+https://docs.oracle.com/en-us/iaas/Content/terraform/object-storage-state.html
