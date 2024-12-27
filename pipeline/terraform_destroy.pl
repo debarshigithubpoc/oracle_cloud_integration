@@ -10,7 +10,7 @@ pipeline {
         stage('Input Directory') {
             steps {
                 script {
-                    def choices = ['C:\\jenkins_workspace\\Terraform\\main\\dev', 'C:\\jenkins_workspace\\Terraform\\main\\uat', 'C:\\jenkins_workspace\\Terraform\\main\\prod']
+                    def choices = ['C:\\jenkins_workspace\\oracle_cloud_integration\\Terraform\\main\\dev', 'C:\\jenkins_workspace\\oracle_cloud_integration\\Terraform\\main\\uat', 'C:\\jenkins_workspace\\oracle_cloud_integration\\Terraform\\main\\prod']
                     env.WORKSPACE_DIR = input(
                         message: 'Select the workspace directory',
                         parameters: [choice(name: 'WORKSPACE_DIR', choices: choices, description: 'Select a directory')]
@@ -53,7 +53,7 @@ pipeline {
             steps {
                 bat """
                     cd "%WORKSPACE_DIR%"
-                    terraform plan -out=tfplan
+                    terraform plan -destroy -out=tfplan
                 """
             }
         }
@@ -68,7 +68,7 @@ pipeline {
             steps {
                 bat """
                     cd "%WORKSPACE_DIR%"
-                    terraform destroy -auto-approve tfplan
+                    terraform apply -destroy -auto-approve tfplan
                 """
             }
         }
