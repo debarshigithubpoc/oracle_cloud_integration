@@ -29,7 +29,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    cd "$WORKSPACE_DIR"
+                    cd "/home/jenkins/workspace/docker_build_image"
                     git clone $GITHUB_REPO
                 '''
             }
@@ -44,7 +44,7 @@ pipeline {
             }
             steps {
                 bat """
-                    cd "%WORKSPACE_DIR%/oracle_cloud_integration/Applications/DotnetDocker/dotnethelloworld"
+                    cd "/home/jenkins/workspace/docker_build_image/oracle_cloud_integration/Applications/DotnetDocker/dotnethelloworld"
                     docker login HYD.ocir.io/ax4qhhyy6wvq/privateregistry --username 'ax4qhhyy6wvq/debarshi.eee@gmail.com' --password 'YS1i2<[VrEMLXTQjmstb'
                     docker build . -t dotnet:v1
                 """
