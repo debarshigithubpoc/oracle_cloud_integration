@@ -1,11 +1,11 @@
 ## Softwares Intalled in the Jenkins Pipeline Runner
-Terraform
-Python 
-OCI cli
-kubectl 
-docker
-Jave 21
-Jenkins
+- Terraform
+- Python 
+- OCI cli
+- kubectl 
+- docker
+- Jave 21
+- Jenkins
 
 # oracle_cloud_integration
 All Infrastructure Codes for oracle cloud integration
