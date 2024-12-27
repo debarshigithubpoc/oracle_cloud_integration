@@ -63,3 +63,13 @@ To configure
 ## For Remote Backend use the below Official Documentation 
 -------------------------------------------------------
 - https://docs.oracle.com/en-us/iaas/Content/terraform/object-storage-state.html
+
+## Create in Container registry in OCI container registry
+- Get the region key from https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.html
+- docker login region-key.ocir.io/registry-namespace/registry-name
+- username: namespace/username
+- password: authtoken
+- Now we can push the docker image to OCI container registry
+- docker build . -t dotnet:v1
+- docker tag -t HYD.ocir.io/ax4qhhyy6wvq/privateregistry dotnet:v1
+- docker push HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:v1
