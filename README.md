@@ -7,15 +7,15 @@
 - Jave 21
 - Jenkins
 
-# oracle_cloud_integration
+## oracle_cloud_integration
 - All Infrastructure Codes for oracle cloud integration
 
-# Install terraform 
+## Install terraform 
 - https://developer.hashicorp.com/terraform/install
 
-# Authentication 
+## Authentication 
 
-If windows Machine
+## If windows Machine
 ------------------
 - setx TF_VAR_tenancy_ocid <Mention the tenacy id>
 - setx TF_VAR_user_ocid <Mention the user ocid>
@@ -24,7 +24,7 @@ If windows Machine
 - setx TF_VAR_region <Mention the region>
 - setx TF_compartment_id_var <Mention the compartment id>
 
-If Linux Machine
+## If Linux Machine
 -----------------
 - export TF_VAR_tenancy_ocid <Mention the tenacy id>
 - export TF_VAR_user_ocid <Mention the user ocid>
@@ -33,6 +33,6 @@ If Linux Machine
 - export TF_VAR_region <Mention the region>
 - export TF_compartment_id_var <Mention the compartment id>
 
-For Remote Backend use the below Official Documentation 
+## For Remote Backend use the below Official Documentation 
 -------------------------------------------------------
 - https://docs.oracle.com/en-us/iaas/Content/terraform/object-storage-state.html
