@@ -61,3 +61,4 @@ module "kubernetes" {
   compartment_id_oci_containerengine_cluster = try(var.compartment_id_var, null)
   depends_on                                 = [module.subnet]
 }
+

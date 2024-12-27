@@ -264,7 +264,7 @@ instances = {
     subnet_display_name      = "oke-k8sprod-svclb-subnet"
     image_source_id          = "ocid1.image.oc1.ap-hyderabad-1.aaaaaaaaslydatemd5ndwrvt2zgrrpmcqsde5ly53ew7r7nqonpe2czzy5cq"
     assign_public_ip         = true
-    ssh_authorized_keys_path = "C:/Users/Debarshi/.ssh/id_rsa.pub"
+    ssh_authorized_keys_path = "C:/jenkins_workspace/Terraform/main/prod/public_key/id_rsa.pub"
   }
 }
 ## ssh opc@140.245.217.53 -i ~/.ssh/id_rsa
