@@ -1,0 +1,8 @@
+C:\app\dotnethelloworld.exe
+C:\app\appsettings.Development.json
+C:\app\appsettings.json
+C:\app\dotnethelloworld.dll
+C:\app\dotnethelloworld.deps.json
+C:\app\dotnethelloworld.runtimeconfig.json
+C:\app\dotnethelloworld.pdb
+C:\app\Newtonsoft.Json.dll

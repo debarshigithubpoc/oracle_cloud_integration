@@ -1,0 +1,7 @@
+from maven:latest AS maven_builder
+WORKDIR build
+COPY . .
+RUN mvn verify
+
+from tomcat:latest
+COPY --from=maven_builder build/target/java-tomcat-maven-example.war /usr/local/tomcat/webapps
