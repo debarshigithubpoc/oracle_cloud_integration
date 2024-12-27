@@ -15,20 +15,23 @@ pipeline {
     }
 
     stages {
+
         stage('Checkout') {
-            steps {
-                script {
-                    if (env.BRANCH_NAME == 'development') {
-                        bat """
-                            if exist "%WORKSPACE_DIR%" rmdir /s /q "%WORKSPACE_DIR%"
-                            cd %WORKSPACE_DIR%
-                            git clone %GITHUB_REPO% "%WORKSPACE_DIR%"
-                        """
-                    }
+            when {
+                anyOf {
+                    branch 'development'
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
                 }
             }
+            steps {
+                bat """
+                    git clone %GITHUB_REPO% "%WORKSPACE_DIR%"
+                    cd
+                    dir
+                """
+            }
         }
-        
+
         stage('Terraform Init') {
             when {
                 anyOf {
