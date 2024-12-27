@@ -25,10 +25,6 @@ pipeline {
             }
             steps {
                 sh '''
-                    if [ -d "$WORKSPACE_DIR" ]; then
-                        rm -rf "$WORKSPACE_DIR"
-                    fi
-                    mkdir "$WORKSPACE_DIR"
                     cd "$WORKSPACE_DIR"
                     git clone $GITHUB_REPO
                 '''
