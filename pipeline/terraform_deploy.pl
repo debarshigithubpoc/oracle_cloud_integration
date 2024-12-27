@@ -6,29 +6,45 @@ pipeline {
         GITHUB_REPO   = "https://github.com/debarshigithubpoc/oracle_cloud_integration.git"
     }
     
+    triggers {
+        pollSCM('H/5 * * * *') // This will poll the SCM every 5 minutes
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                bat """
-                    if exist "%WORKSPACE_DIR%" rmdir /s /q "%WORKSPACE_DIR%"
-                    git clone %GITHUB_REPO% "%WORKSPACE_DIR%"
-                """
+                script {
+                    if (env.BRANCH_NAME == 'development') {
+                        bat """
+                            if exist "%WORKSPACE_DIR%" rmdir /s /q "%WORKSPACE_DIR%"
+                            git clone %GITHUB_REPO% "%WORKSPACE_DIR%"
+                        """
+                    }
+                }
             }
         }
         
         stage('Terraform Init') {
+            when {
+                branch 'development'
+                expression { return currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+            }
             steps {
                 bat """
-                    cd "%WORKSPACE_DIR%\\Terraform\\main"
+                    cd "%WORKSPACE_DIR%\\Terraform\\main\\dev"
                     terraform init
                 """
             }
         }
 
         stage('Terraform Format & Validate') {
+            when {
+                branch 'development'
+                expression { return currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+            }
             steps {
                 bat """
-                    cd "%WORKSPACE_DIR%\\Terraform\\main"
+                    cd "%WORKSPACE_DIR%\\Terraform\\main\\dev"
                     terraform fmt -check
                     terraform validate
                 """
@@ -36,24 +52,36 @@ pipeline {
         }
         
         stage('Terraform Plan') {
+            when {
+                branch 'development'
+                expression { return currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+            }
             steps {
                 bat """
-                    cd "%WORKSPACE_DIR%\\Terraform\\main"
+                    cd "%WORKSPACE_DIR%\\Terraform\\main\\dev"
                     terraform plan -out=tfplan
                 """
             }
         }
         
         stage('Approval') {
+            when {
+                branch 'development'
+                expression { return currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+            }
             steps {
                 input message: 'Review the plan and approve to apply'
             }
         }
         
         stage('Terraform Apply') {
+            when {
+                branch 'development'
+                expression { return currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+            }
             steps {
                 bat """
-                    cd "%WORKSPACE_DIR%\\Terraform\\main"
+                    cd "%WORKSPACE_DIR%\\Terraform\\main\\dev"
                     terraform apply -auto-approve tfplan
                 """
             }
