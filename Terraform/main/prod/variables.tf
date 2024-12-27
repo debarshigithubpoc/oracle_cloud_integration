@@ -21,6 +21,10 @@ variable "internet_gateways_var" {
   default = {}
 }
 
+variable "service_gateways_var" {
+  default = {}
+}
+
 variable "route_tables_var" {
   default = {}
 }

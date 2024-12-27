@@ -8,9 +8,10 @@ resource "oci_core_route_table" "route_table" {
   dynamic "route_rules" {
     for_each = try(each.value.route_rules, [])
     content {
-      cidr_block        = route_rules.value.cidr_block
-      network_entity_id = data.oci_core_internet_gateways.existing_internet_gateways[each.key].id
+      destination       = try(route_rules.value.destination, null)
+      network_entity_id = each.value.gateway_type == "internet" ? try(data.oci_core_internet_gateways.existing_internet_gateways[each.key].gateways[0].id, null) : try(data.oci_core_service_gateways.existing_service_gateways[each.key].service_gateways[0].id, null)
       description       = try(route_rules.value.description, null)
+      destination_type  = try(each.value.destination_type, null)
     }
   }
 }

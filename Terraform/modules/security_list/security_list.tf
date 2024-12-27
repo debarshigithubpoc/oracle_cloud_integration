@@ -10,6 +10,22 @@ resource "oci_core_security_list" "security_list" {
     content {
       source   = ingress_security_rules.value.source
       protocol = ingress_security_rules.value.protocol
+
+      dynamic "icmp_options" {
+        for_each = try(ingress_security_rules.value.icmp_options, null) != null ? [ingress_security_rules.value.icmp_options] : []
+        content {
+          type = icmp_options.value.type
+          code = icmp_options.value.code
+        }
+      }
+
+      dynamic "tcp_options" {
+        for_each = try(ingress_security_rules.value.tcp_options, null) != null ? [ingress_security_rules.value.tcp_options] : []
+        content {
+          min = tcp_options.value.destination_port_range.min
+          max = tcp_options.value.destination_port_range.max
+        }
+      }
     }
   }
 
@@ -18,6 +34,22 @@ resource "oci_core_security_list" "security_list" {
     content {
       destination = egress_security_rules.value.destination
       protocol    = egress_security_rules.value.protocol
+
+      dynamic "icmp_options" {
+        for_each = try(egress_security_rules.value.icmp_options, null) != null ? [egress_security_rules.value.icmp_options] : []
+        content {
+          type = icmp_options.value.type
+          code = icmp_options.value.code
+        }
+      }
+
+      dynamic "tcp_options" {
+        for_each = try(egress_security_rules.value.tcp_options, null) != null ? [egress_security_rules.value.tcp_options] : []
+        content {
+          min = tcp_options.value.destination_port_range.min
+          max = tcp_options.value.destination_port_range.max
+        }
+      }
     }
   }
 }

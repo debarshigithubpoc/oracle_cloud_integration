@@ -15,6 +15,16 @@ resource "oci_containerengine_cluster" "test_cluster" {
     subnet_id            = data.oci_core_subnets.existing_subnets[each.key].subnets[0].id
   }
 
+  options {
+    add_ons {
+      is_kubernetes_dashboard_enabled = true
+      is_tiller_enabled               = false
+    }
+    admission_controller_options {
+      is_pod_security_policy_enabled = false
+    }
+  }
+
   freeform_tags = merge(try(each.value.freeform_tags, null), { "Department" = "Finance" })
   defined_tags = merge(try(each.value.defined_tags, {
     "Oracle-Tags.CreatedBy" = "default/debarshi.eee@gmail.com",
