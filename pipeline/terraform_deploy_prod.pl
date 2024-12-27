@@ -26,6 +26,7 @@ pipeline {
             steps {
                 bat """
                     if exist "%WORKSPACE_DIR%" rmdir /s /q "%WORKSPACE_DIR%"
+                    mkdir "%WORKSPACE_DIR%"
                     cd "%WORKSPACE_DIR%"
                     git clone %GITHUB_REPO% 
                 """
@@ -41,7 +42,7 @@ pipeline {
             }
             steps {
                 bat """
-                    cd "%WORKSPACE_DIR%\\Terraform\\main\\prod"
+                    cd "%WORKSPACE_DIR%\\oracle_cloud_integration\\Terraform\\main\\prod"
                     terraform init
                 """
             }
@@ -56,7 +57,7 @@ pipeline {
             }
             steps {
                 bat """
-                    cd "%WORKSPACE_DIR%\\Terraform\\main\\prod"
+                    cd "%WORKSPACE_DIR%\\oracle_cloud_integration\\Terraform\\main\\prod"
                     terraform fmt -check
                     terraform validate
                 """
@@ -72,7 +73,7 @@ pipeline {
             }
             steps {
                 bat """
-                    cd "%WORKSPACE_DIR%\\Terraform\\main\\prod"
+                    cd "%WORKSPACE_DIR%\\oracle_cloud_integration\\Terraform\\main\\prod"
                     terraform plan -out=tfplan
                 """
             }
@@ -99,7 +100,7 @@ pipeline {
             }
             steps {
                 bat """
-                    cd "%WORKSPACE_DIR%\\Terraform\\main\\prod"
+                    cd "%WORKSPACE_DIR%\\oracle_cloud_integration\\Terraform\\main\\prod"
                     terraform apply -auto-approve tfplan
                 """
             }
