@@ -14,6 +14,10 @@ pipeline {
         pollSCM('* * * * *') // This will poll the SCM every 1 minute
     }
 
+    tools {
+        git 'Default'
+    }
+
     stages {
 
         stage('Checkout') {
