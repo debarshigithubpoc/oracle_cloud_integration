@@ -42,7 +42,7 @@ pipeline {
             }
             steps {
                 bat """
-                    cd "%WORKSPACE_DIR%\\Terraform\\main\\dev"
+                    cd "%WORKSPACE_DIR%\\oracle_cloud_integration\\Terraform\\main\\dev"
                     terraform init
                 """
             }
@@ -57,7 +57,7 @@ pipeline {
             }
             steps {
                 bat """
-                    cd "%WORKSPACE_DIR%\\Terraform\\main\\dev"
+                    cd "%WORKSPACE_DIR%\\oracle_cloud_integration\\Terraform\\main\\dev"
                     terraform fmt -check
                     terraform validate
                 """
@@ -73,7 +73,7 @@ pipeline {
             }
             steps {
                 bat """
-                    cd "%WORKSPACE_DIR%\\Terraform\\main\\dev"
+                    cd "%WORKSPACE_DIR%\\oracle_cloud_integration\\Terraform\\main\\dev"
                     terraform plan -out=tfplan
                 """
             }
@@ -100,7 +100,7 @@ pipeline {
             }
             steps {
                 bat """
-                    cd "%WORKSPACE_DIR%\\Terraform\\main\\dev"
+                    cd "%WORKSPACE_DIR%\\oracle_cloud_integration\\Terraform\\main\\dev"
                     terraform apply -auto-approve tfplan
                 """
             }
