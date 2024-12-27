@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        WORKSPACE_DIR = "C:\\jenkins_workspace"
+        WORKSPACE_DIR = "C:\\jenkins_workspace\\staging"
         GITHUB_REPO   = "https://github.com/debarshigithubpoc/oracle_cloud_integration.git"
     }
     
