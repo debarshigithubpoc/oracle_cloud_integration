@@ -1,15 +1,30 @@
-## Softwares Installed in the Jenkins Windows Pipeline Runner
-- Terraform
-- Python 
-- OCI cli
-- Jave 21
-- Jenkins
+# Oracle Cloud Infrastructure Integration Guide
 
-## Softwares Installed in the Jenkins Linux Pipeline Runner
-- kubectl
-- helm
-- java
-- docker
+## Overview
+This repository contains infrastructure code for Oracle Cloud integration and Jenkins pipeline configuration.
+
+## Jenkins Pipeline Runner Configurations
+
+### Windows Runner Software Stack
+| Software | Purpose |
+|----------|---------|
+| Terraform | Infrastructure as Code |
+| Python | Scripting and Automation |
+| OCI CLI | Oracle Cloud Interface |
+| Java 21 | Runtime Environment |
+| Jenkins | CI/CD Pipeline |
+
+### Linux Runner Software Stack
+| Software | Purpose |
+|----------|---------|
+| kubectl | Kubernetes Control |
+| Helm | Package Management |
+| Java | Runtime Environment |
+| Docker | Containerization |
+
+## SSH Configuration
+To configure
+To configure
 
 ## Some other steps
 - Also from jenkins box ssh-keyscan -H linuxrunner to get ssh cert and store it in C:\Users\username\.ssh\known_hosts
@@ -19,10 +34,7 @@ it will look something like this as mentioned down below
 |1|Y9EXuzgQAsK9M7L9LJq80QLSjUs=|WpkLXU6h6KuOtRoUO5vTqp53eOU= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBILx6JIzH7zPsNc8i3SdsRLT81uqxRUnAj0jE1/SGNMNBPNankdGeUXtqFHMOeB8vS1LzRo8Jrl1Y1t7GhsLEwI=
 |1|mOLr5swpQJEL2kaEGT9lbWvCM/A=|ec+qg9bf8OZnqZBUJfiwNRILcpg= ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKzk0KcyZ8lswtee/OdmWbOwB5pVUhVPC4B29wylWHVR
 ....
-
-## oracle_cloud_integration
-- All Infrastructure Codes for oracle cloud integration
-
+  
 ## Install terraform 
 - https://developer.hashicorp.com/terraform/install
 
