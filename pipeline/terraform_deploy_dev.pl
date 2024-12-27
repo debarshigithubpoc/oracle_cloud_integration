@@ -21,6 +21,7 @@ pipeline {
                     if (env.BRANCH_NAME == 'development') {
                         bat """
                             if exist "%WORKSPACE_DIR%" rmdir /s /q "%WORKSPACE_DIR%"
+                            cd %WORKSPACE_DIR%
                             git clone %GITHUB_REPO% "%WORKSPACE_DIR%"
                         """
                     }
