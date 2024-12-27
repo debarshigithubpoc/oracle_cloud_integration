@@ -26,6 +26,7 @@ pipeline {
             steps {
                 bat """
                     if exist "%WORKSPACE_DIR%" rmdir /s /q "%WORKSPACE_DIR%"
+                    mkdir "%WORKSPACE_DIR%"
                     cd "%WORKSPACE_DIR%"
                     git clone %GITHUB_REPO% 
                 """
