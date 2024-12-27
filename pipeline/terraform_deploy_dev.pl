@@ -25,9 +25,8 @@ pipeline {
             }
             steps {
                 bat """
-                    git clone %GITHUB_REPO% "%WORKSPACE_DIR%"
-                    cd
-                    dir
+                    cd "%WORKSPACE_DIR%"
+                    git clone %GITHUB_REPO% 
                 """
             }
         }
