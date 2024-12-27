@@ -6,8 +6,12 @@ pipeline {
         GITHUB_REPO   = "https://github.com/debarshigithubpoc/oracle_cloud_integration.git"
     }
     
+    parameters {
+        booleanParam(name: 'FORCE_RUN', defaultValue: false, description: 'Force run the pipeline stages')
+    }
+    
     triggers {
-        pollSCM('* * * * *') // This will poll the SCM every 1 minutes
+        pollSCM('* * * * *') // This will poll the SCM every 1 minute
     }
 
     stages {
@@ -26,8 +30,10 @@ pipeline {
         
         stage('Terraform Init') {
             when {
-                branch 'development'
-                expression { return currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+                anyOf {
+                    branch 'development'
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+                }
             }
             steps {
                 bat """
@@ -39,8 +45,10 @@ pipeline {
 
         stage('Terraform Format & Validate') {
             when {
-                branch 'development'
-                expression { return currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+                anyOf {
+                    branch 'development'
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+                }
             }
             steps {
                 bat """
@@ -53,8 +61,10 @@ pipeline {
         
         stage('Terraform Plan') {
             when {
-                branch 'development'
-                expression { return currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+                anyOf {
+                    branch 'development'
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+                }
             }
             steps {
                 bat """
@@ -66,8 +76,10 @@ pipeline {
         
         stage('Approval') {
             when {
-                branch 'development'
-                expression { return currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+                anyOf {
+                    branch 'development'
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+                }
             }
             steps {
                 input message: 'Review the plan and approve to apply'
@@ -76,8 +88,10 @@ pipeline {
         
         stage('Terraform Apply') {
             when {
-                branch 'development'
-                expression { return currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+                anyOf {
+                    branch 'development'
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+                }
             }
             steps {
                 bat """
