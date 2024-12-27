@@ -10,7 +10,7 @@ pipeline {
         stage('Input Directory') {
             steps {
                 script {
-                    def choices = ['C:\\jenkins_workspace\\oracle_cloud_integration\\Terraform\\main\\dev', 'C:\\jenkins_workspace\\oracle_cloud_integration\\Terraform\\main\\uat', 'C:\\jenkins_workspace\\oracle_cloud_integration\\Terraform\\main\\prod']
+                    def choices = ['C:\\jenkins_workspace\\oracle_cloud_integration\\Terraform\\main\\dev', 'C:\\jenkins_workspace\\oracle_cloud_integration\\Terraform\\main\\staging', 'C:\\jenkins_workspace\\oracle_cloud_integration\\Terraform\\main\\prod']
                     env.WORKSPACE_DIR = input(
                         message: 'Select the workspace directory',
                         parameters: [choice(name: 'WORKSPACE_DIR', choices: choices, description: 'Select a directory')]
