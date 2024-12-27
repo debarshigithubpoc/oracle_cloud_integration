@@ -207,38 +207,6 @@ service_gateways_var = {
   }
 }
 
-## Imported route table copy the ocid as resource id of the route table 
-## terraform.exe import "module.route_table.oci_core_route_table.route_table[\"route_table_1\"]" ocid1.routetable.oc1.ap-hyderabad-1.aaaaaaaajlckzyxxn36spfcqt6fkg6kbtbx2c6yqvzk33jlx73nlobaegnwq
-## OCI Core Route tabels for private and public subnet
-route_tables_var = {
-  route_table_1 = {
-    display_name     = "oke-k8sdev-private-routetable"
-    vcn_display_name = "oke-k8sdev-vcn-vnet"
-    gateway_type     = "service"
-    route_rules = [
-      {
-        destination      = "all-hyd-services-in-oracle-services-network"
-        description      = "Route rule for Service gateway"
-        destination_type = "SERVICE_CIDR_BLOCK"
-      }
-    ]
-  }
-
-  route_table_2 = {
-    display_name     = "oke-k8sdev-public-routetable"
-    vcn_display_name = "oke-k8sdev-vcn-vnet"
-    gateway_type     = "internet"
-    route_rules = [
-      {
-        destination                   = "0.0.0.0/0"
-        description                   = "Route rule for NAT gateway"
-        internet_gateway_display_name = "oke-k8sdev-igw"
-        destination_type              = "CIDR_BLOCK"
-      }
-    ]
-  }
-}
-
 ## K8S Cluster for OCI Container Engine
 oci_containerengine_clusters_var = {
   quick-cluster1 = {
@@ -272,29 +240,3 @@ instances = {
 ## sudo dnf -y install oraclelinux-developer-release-el8
 ## sudo dnf install python36-oci-cli
 ## oci setup config
-## 
-
-
-# network_security_group_var = {
-#   nsg1 = {
-#     network_security_group = {
-#       display_name     = "vcn-dev-001-nsg-001"
-#       vcn_display_name = "vcn-dev-001"
-#     }
-#     nsg_rules = {
-#       rule1 = {
-#         direction   = "INGRESS"
-#         protocol    = "6"
-#         source_type = "CIDR_BLOCK"
-#         source      = "0.0.0.0/0"
-
-#         tcp_options = {
-#           destination_port_range = {
-#             max = 22
-#             min = 22
-#           }
-#         }
-#       }
-#     }
-#   }
-# }
