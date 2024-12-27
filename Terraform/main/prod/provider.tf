@@ -12,7 +12,7 @@ provider "oci" {
 
 terraform {
   backend "http" {
-    address       = "https://objectstorage.us-sanjose-1.oraclecloud.com/p/bf640XMjEo6smvwX_N9xCEzv-Y6K4EeuiTF4CznzxjTvbYNE9Qa4qJmc3eKpWNUz/n/axxeo7mon9c6/b/bucket-20240817-1023/o/terraform.prod.tfstate"
+    address       = "https://ax4qhhyy6wvq.objectstorage.ap-hyderabad-1.oci.customer-oci.com/p/wZnpMrVTbMJWtt3lC85gOMcGn05KtldL0BKF0V-eSs9OuBxT9LBkYCRp4Idx_7RK/n/ax4qhhyy6wvq/b/terraform-bucket/o/terraform.prod.tfstate"
     update_method = "PUT"
   }
 }
