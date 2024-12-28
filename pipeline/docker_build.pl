@@ -46,7 +46,7 @@ pipeline {
                 sh '''
                     cd "/home/jenkins/workspace/docker_build_image/oracle_cloud_integration/Applications/DotnetDocker/dotnethelloworld"
                     docker login HYD.ocir.io/ax4qhhyy6wvq/privateregistry --username 'ax4qhhyy6wvq/debarshi.eee@gmail.com' --password 'YS1i2<[VrEMLXTQjmstb'
-                    docker build . -t dotnet:v1
+                    docker build . -t dotnet:${BUILD_NUMBER}
                 '''
             }
         }
@@ -72,8 +72,8 @@ pipeline {
             }
             steps {
                 sh '''
-                    docker tag dotnet:v1 HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:v1
-                    docker push HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:v1
+                    docker tag dotnet:${BUILD_NUMBER} HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:${BUILD_NUMBER}
+                    docker push HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:${BUILD_NUMBER}
                 '''
             }
         }
