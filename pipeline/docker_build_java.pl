@@ -49,7 +49,7 @@ pipeline {
                 sh '''
                     cd "/home/jenkins/workspace/docker_build_image/oracle_cloud_integration/Applications/JavaDocker"
                     docker login HYD.ocir.io/ax4qhhyy6wvq/privateregistry --username 'ax4qhhyy6wvq/debarshi.eee@gmail.com' --password 'YS1i2<[VrEMLXTQjmstb'
-                    docker build . -t Java:${BUILD_NUMBER}
+                    docker build . -t java:${BUILD_NUMBER}
                 '''
             }
         }
@@ -75,8 +75,8 @@ pipeline {
             }
             steps {
                 sh '''
-                    docker tag Java:${BUILD_NUMBER} HYD.ocir.io/ax4qhhyy6wvq/privateregistry/Java:${BUILD_NUMBER}
-                    docker push HYD.ocir.io/ax4qhhyy6wvq/privateregistry/Java:${BUILD_NUMBER}
+                    docker tag java:${BUILD_NUMBER} HYD.ocir.io/ax4qhhyy6wvq/privateregistry/java:${BUILD_NUMBER}
+                    docker push HYD.ocir.io/ax4qhhyy6wvq/privateregistry/java:${BUILD_NUMBER}
                 '''
             }
         }

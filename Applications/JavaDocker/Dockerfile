@@ -1,11 +1,11 @@
 # Stage 1: Build the application with Maven
-FROM maven:latest AS maven_builder
+FROM docker.io/library/maven:latest AS maven_builder
 WORKDIR /build
 COPY . .
 RUN mvn verify
 
 # Stage 2: Deploy the application to Tomcat
-FROM tomcat:latest
+FROM docker.io/library/tomcat:latest
 COPY --from=maven_builder /build/target/java-tomcat-maven.war /usr/local/tomcat/webapps/
 
 # Expose the default Tomcat port
