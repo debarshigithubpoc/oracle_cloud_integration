@@ -11,5 +11,5 @@ COPY --from=maven_builder /build/target/java-tomcat-maven.war /usr/local/tomcat/
 # Expose the default Tomcat port
 EXPOSE 8080
 
-# Start Tomcat
+# Start Tomcat 
 CMD ["catalina.sh", "run"]

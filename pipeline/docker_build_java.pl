@@ -29,6 +29,7 @@ pipeline {
             }
             steps {
                 sh '''
+                    mkdir /home/jenkins/workspace/docker_build_image
                     cd "/home/jenkins/workspace/docker_build_image"
                     git clone $GITHUB_REPO
                 '''
