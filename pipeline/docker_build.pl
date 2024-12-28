@@ -87,8 +87,11 @@ pipeline {
             }
             steps {
                 sh '''
-                    docker rmi HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:v1
-                    docker rmi dotnet:v1
+                    docker container prune -f
+                    docker image prune -a -f
+                    docker volume prune -f
+                    docker network prune -f
+                    echo "Docker cleanup completed!"
                 '''
             }
         }        
