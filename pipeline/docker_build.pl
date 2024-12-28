@@ -43,11 +43,11 @@ pipeline {
                 }
             }
             steps {
-                bat """
+                sh '''
                     cd "/home/jenkins/workspace/docker_build_image/oracle_cloud_integration/Applications/DotnetDocker/dotnethelloworld"
                     docker login HYD.ocir.io/ax4qhhyy6wvq/privateregistry --username 'ax4qhhyy6wvq/debarshi.eee@gmail.com' --password 'YS1i2<[VrEMLXTQjmstb'
                     docker build . -t dotnet:v1
-                """
+                '''
             }
         }
         
@@ -71,10 +71,10 @@ pipeline {
                 }
             }
             steps {
-                bat """
+                sh '''
                     docker tag dotnet:latest HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:v1
                     docker push HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:v1
-                """
+                '''
             }
         }
 
@@ -86,10 +86,10 @@ pipeline {
                 }
             }
             steps {
-                bat """
+                sh '''
                     docker rmi HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:v1
                     docker rmi dotnet:v1
-                """
+                '''
             }
         }        
     }
