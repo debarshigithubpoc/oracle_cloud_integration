@@ -72,7 +72,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    docker tag dotnet:latest HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:v1
+                    docker tag dotnet:v1 HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:v1
                     docker push HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:v1
                 '''
             }
