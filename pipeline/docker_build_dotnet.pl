@@ -29,7 +29,12 @@ pipeline {
             }
             steps {
                 sh '''
-                    mkdir /home/jenkins/workspace/docker_build_image
+                    DIR="/home/jenkins/workspace/docker_build_image"
+                    if [ ! -d "$DIR" ]; then
+                    mkdir -p "$DIR"
+                    else
+                    echo "Directory $DIR already exists."
+                    fi
                     cd "/home/jenkins/workspace/docker_build_image"
                     git clone $GITHUB_REPO
                 '''
