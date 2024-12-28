@@ -55,7 +55,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'development'
-                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
             }
             steps {
@@ -67,7 +67,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'development'
-                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
             }
             steps {
@@ -82,7 +82,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'development'
-                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Terraform/main/dev') } } }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
             }
             steps {
