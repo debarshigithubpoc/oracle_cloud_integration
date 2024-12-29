@@ -22,7 +22,7 @@ pipeline {
 
         stage('Checkout') {
             when {
-                anyOf {
+                allOf {
                     branch 'development'
                     expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
@@ -40,15 +40,18 @@ pipeline {
 
         stage('Docker Build') {
             when {
-                anyOf {
+                allOf {
                     branch 'development'
                     expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
             }
             steps {
-                sh '''
+                withCredentials([string(credentialsId: 'dockerRegistry', variable: 'DOCKER_REGISTRY'),
+                                 string(credentialsId: 'dockerUsername', variable: 'DOCKER_USERNAME'),
+                                 string(credentialsId: 'dockerPassword', variable: 'DOCKER_PASSWORD')]) {
+                    sh '''
                     cd "/home/jenkins/workspace/docker_build_image/oracle_cloud_integration/Applications/DotnetDocker/dotnethelloworld"
-                    docker login HYD.ocir.io/ax4qhhyy6wvq/privateregistry --username 'ax4qhhyy6wvq/debarshi.eee@gmail.com' --password 'YS1i2<[VrEMLXTQjmstb'
+                    docker login $DOCKER_REGISTRY --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
                     docker build . -t dotnet:${BUILD_NUMBER}
                 '''
             }
@@ -56,7 +59,7 @@ pipeline {
         
         stage('Approval') {
             when {
-                anyOf {
+                allOf {
                     branch 'development'
                     expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
@@ -68,22 +71,23 @@ pipeline {
         
         stage('Docker Push to Container Registry') {
             when {
-                anyOf {
+                allOf {
                     branch 'development'
                     expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
             }
             steps {
-                sh '''
-                    docker tag dotnet:${BUILD_NUMBER} HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:${BUILD_NUMBER}
-                    docker push HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:${BUILD_NUMBER}
+                withCredentials([string(credentialsId: 'dockerregistry', variable: 'DOCKER_REGISTRY')]) {
+                    sh '''
+                    docker tag dotnet:${BUILD_NUMBER} $DOCKER_REGISTRY/dotnet:${BUILD_NUMBER}
+                    docker push $DOCKER_REGISTRY/dotnet:${BUILD_NUMBER}
                 '''
             }
         }
 
         stage('Docker cleanup tags and images') {
             when {
-                anyOf {
+                allOf {
                     branch 'development'
                     expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
