@@ -26,13 +26,7 @@ pipeline {
             when {
                 anyOf {
                     branch branchName
-                    expression { 
-                        return params.FORCE_RUN || currentBuild.changeSets.any { changeSet ->
-                            changeSet.items.any { item ->
-                                item.affectedFiles.any { it.path.startsWith(dockerDirectory) }
-                            }
-                        }
-                    }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(dockerDirectory) } } }
                 }
             }
             steps {
@@ -50,13 +44,7 @@ pipeline {
             when {
                 anyOf {
                     branch branchName
-                    expression { 
-                        return params.FORCE_RUN || currentBuild.changeSets.any { changeSet ->
-                            changeSet.items.any { item ->
-                                item.affectedFiles.any { it.path.startsWith(dockerDirectory) }
-                            }
-                        }
-                    }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(dockerDirectory) } } }
                 }
             }
             steps {
@@ -76,13 +64,7 @@ pipeline {
             when {
                 anyOf {
                     branch branchName
-                    expression { 
-                        return params.FORCE_RUN || currentBuild.changeSets.any { changeSet ->
-                            changeSet.items.any { item ->
-                                item.affectedFiles.any { it.path.startsWith(dockerDirectory) }
-                            }
-                        }
-                    }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(dockerDirectory) } } }
                 }
             }
             steps {
@@ -94,13 +76,7 @@ pipeline {
             when {
                 anyOf {
                     branch branchName
-                    expression { 
-                        return params.FORCE_RUN || currentBuild.changeSets.any { changeSet ->
-                            changeSet.items.any { item ->
-                                item.affectedFiles.any { it.path.startsWith(dockerDirectory) }
-                            }
-                        }
-                    }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(dockerDirectory) } } }
                 }
             }
             steps {
@@ -108,7 +84,7 @@ pipeline {
                     sh """
                     docker tag "${dockerImageName}:${BUILD_NUMBER}" "$DOCKER_REGISTRY/${dockerImageName}:${BUILD_NUMBER}"
                     docker push "$DOCKER_REGISTRY/${dockerImageName}:${BUILD_NUMBER}"
-                    """
+                """
                 }
             }
         }
