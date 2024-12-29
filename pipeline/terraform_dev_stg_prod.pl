@@ -12,7 +12,7 @@ pipeline {
             }
         }
 
-        stage('Approval') {
+        stage('PromoteToStaging') {
             steps {
                 input message: 'Review the dev environment and promote it to staging environment'
             }
@@ -26,7 +26,7 @@ pipeline {
             }
         }
 
-        stage('Approval') {
+        stage('PromoteToProduction') {
             steps {
                 input message: 'Review the staging environment and promote it to production environment'
             }
