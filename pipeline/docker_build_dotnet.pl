@@ -54,6 +54,7 @@ pipeline {
                     docker login $DOCKER_REGISTRY --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
                     docker build . -t dotnet:${BUILD_NUMBER}
                 '''
+                }
             }
         }
         
@@ -82,6 +83,7 @@ pipeline {
                     docker tag dotnet:${BUILD_NUMBER} $DOCKER_REGISTRY/dotnet:${BUILD_NUMBER}
                     docker push $DOCKER_REGISTRY/dotnet:${BUILD_NUMBER}
                 '''
+                }
             }
         }
 
