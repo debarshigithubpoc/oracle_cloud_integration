@@ -1,5 +1,5 @@
 // vars/pipelineTemplate.groovy
-def call(String branchName, String terraformDir, String agentLabel) {
+def call(String terraformDir, String agentLabel) {
     pipeline {
         agent { label agentLabel }
         

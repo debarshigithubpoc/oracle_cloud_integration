@@ -1,4 +1,4 @@
-@Library('pipelineTemplate') _
+@Library('terraformUnifiedTemplate') _
 
 pipeline {
     agent any
@@ -10,7 +10,7 @@ pipeline {
             }
             steps {
                 script {
-                    pipelineTemplate('development', 'Terraform/main/dev', 'windows')
+                    terraformUnifiedTemplate('development', 'Terraform/main/dev', 'windows')
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 script {
-                    pipelineTemplate('main', 'Terraform/main/prod', 'windows')
+                    terraformUnifiedTemplate('main', 'Terraform/main/prod', 'windows')
                 }
             }
         }
@@ -30,7 +30,7 @@ pipeline {
             }
             steps {
                 script {
-                    pipelineTemplate('staging', 'Terraform/main/staging', 'windows')
+                    terraformUnifiedTemplate('staging', 'Terraform/main/staging', 'windows')
                 }
             }
         }
