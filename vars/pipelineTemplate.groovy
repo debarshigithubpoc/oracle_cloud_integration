@@ -19,7 +19,7 @@ def call(String branchName, String terraformDir, String agentLabel) {
         stages {
             stage('Checkout') {
                 when {
-                    allOf {
+                    anyOf {
                         branch branchName
                         expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(terraformDir) } } }
                     }
@@ -36,7 +36,7 @@ def call(String branchName, String terraformDir, String agentLabel) {
             
             stage('Terraform Init') {
                 when {
-                    allOf {
+                    anyOf {
                         branch branchName
                         expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(terraformDir) } } }
                     }
@@ -51,7 +51,7 @@ def call(String branchName, String terraformDir, String agentLabel) {
 
             stage('Terraform Format & Validate') {
                 when {
-                    allOf {
+                    anyOf {
                         branch branchName
                         expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(terraformDir) } } }
                     }
@@ -67,7 +67,7 @@ def call(String branchName, String terraformDir, String agentLabel) {
             
             stage('Terraform Plan') {
                 when {
-                    allOf {
+                    anyOf {
                         branch branchName
                         expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(terraformDir) } } }
                     }
@@ -82,7 +82,7 @@ def call(String branchName, String terraformDir, String agentLabel) {
             
             stage('Approval') {
                 when {
-                    allOf {
+                    anyOf {
                         branch branchName
                         expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(terraformDir) } } }
                     }
@@ -94,7 +94,7 @@ def call(String branchName, String terraformDir, String agentLabel) {
             
             stage('Terraform Apply') {
                 when {
-                    allOf {
+                    anyOf {
                         branch branchName
                         expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(terraformDir) } } }
                     }

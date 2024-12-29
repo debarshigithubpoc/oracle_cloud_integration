@@ -22,7 +22,7 @@ pipeline {
 
         stage('Checkout') {
             when {
-                allOf {
+                anyOf {
                     branch 'development'
                     expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
@@ -40,7 +40,7 @@ pipeline {
 
         stage('Docker Build') {
             when {
-                allOf {
+                anyOf {
                     branch 'development'
                     expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
@@ -60,7 +60,7 @@ pipeline {
         
         stage('Approval') {
             when {
-                allOf {
+                anyOf {
                     branch 'development'
                     expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
@@ -72,7 +72,7 @@ pipeline {
         
         stage('Docker Push to Container Registry') {
             when {
-                allOf {
+                anyOf {
                     branch 'development'
                     expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
@@ -89,7 +89,7 @@ pipeline {
 
         stage('Docker cleanup tags and images') {
             when {
-                allOf {
+                anyOf {
                     branch 'development'
                     expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
