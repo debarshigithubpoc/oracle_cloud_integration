@@ -26,7 +26,7 @@ pipeline {
             when {
                 anyOf {
                     branch branchName
-                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(dockerDirectory) } } }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedPaths.any { it.path.startsWith(dockerDirectory) } } }
                 }
             }
             steps {
@@ -44,7 +44,7 @@ pipeline {
             when {
                 anyOf {
                     branch branchName
-                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(dockerDirectory) } } }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedPaths.any { it.path.startsWith(dockerDirectory) } } }
                 }
             }
             steps {
@@ -64,7 +64,7 @@ pipeline {
             when {
                 anyOf {
                     branch branchName
-                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(dockerDirectory) } } }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedPaths.any { it.path.startsWith(dockerDirectory) } } }
                 }
             }
             steps {
@@ -76,7 +76,7 @@ pipeline {
             when {
                 anyOf {
                     branch branchName
-                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(dockerDirectory) } } }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedPaths.any { it.path.startsWith(dockerDirectory) } } }
                 }
             }
             steps {
@@ -93,7 +93,7 @@ pipeline {
             when {
                 anyOf {
                     branch branchName
-                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(dockerDirectory) } } }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedPaths.any { it.path.startsWith(dockerDirectory) } } }
                 }
             }
             steps {
