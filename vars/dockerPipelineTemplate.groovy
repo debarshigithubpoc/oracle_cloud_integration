@@ -53,7 +53,7 @@ pipeline {
                                  string(credentialsId: dockerPassSecret, variable: 'DOCKER_SECRET')]) {
                     sh """
                     cd "/home/jenkins/workspace/docker_build_image/oracle_cloud_integration/${dockerDirectory}"
-                    docker login ${DOCKER_REGISTRY} --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+                    docker login ${DOCKER_REGISTRY} --username ${DOCKER_USERNAME} --password ${DOCKER_SECRET}
                     docker build . -t dotnet:${BUILD_NUMBER}
                 """
                 }
