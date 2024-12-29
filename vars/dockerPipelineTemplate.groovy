@@ -1,4 +1,4 @@
-// vars/pipelineTemplate.groovy
+// vars/dockerPipelineTemplate.groovy
 def call(String branchName, String dockerDirectory, String dockerImageName, String agentLabel, String dockerRegistrySecret , String dockerUsernameSecret, String dockerPassSecret) {
 pipeline {
     agent { label agentLabel }
