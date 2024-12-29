@@ -1,3 +1,3 @@
 // Jenkinsfile for main
 @Library('pipelineTemplate') _
-pipelineTemplate('main', 'Terraform/main/prod')
+pipelineTemplate('main', 'Terraform/main/prod', 'windows')

@@ -1,7 +1,7 @@
 // vars/pipelineTemplate.groovy
-def call(String branchName, String terraformDir) {
+def call(String branchName, String terraformDir, String agentLabel) {
     pipeline {
-        agent any
+        agent { label agentLabel }
         
         environment {
             WORKSPACE_DIR = "C:\\jenkins_workspace"
