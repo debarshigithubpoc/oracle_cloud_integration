@@ -1,5 +1,5 @@
 // vars/pipelineTemplate.groovy
-def call(String branchName, String dockerDirectory, String agentLabel, String dockerRegistrySecret , String dockerUsernameSecret, String dockerPassSecret) {
+def call(String branchName, String dockerDirectory, String dockerImageName, String agentLabel, String dockerRegistrySecret , String dockerUsernameSecret, String dockerPassSecret) {
 pipeline {
     agent { label agentLabel }
     
@@ -54,7 +54,7 @@ pipeline {
                     sh """
                     cd "/home/jenkins/workspace/docker_build_image/oracle_cloud_integration/${dockerDirectory}"
                     docker login "${DOCKER_REGISTRY}" --username "${DOCKER_USERNAME}" --password "${DOCKER_SECRET}"
-                    docker build . -t dotnet:${BUILD_NUMBER}
+                    docker build . -t "${dockerImageName}:${BUILD_NUMBER}"
                 """
                 }
             }
@@ -81,10 +81,10 @@ pipeline {
             }
             steps {
                 withCredentials([string(credentialsId: 'dockerregistry', variable: 'DOCKER_REGISTRY')]) {
-                    sh '''
-                    docker tag dotnet:${BUILD_NUMBER} $DOCKER_REGISTRY/dotnet:${BUILD_NUMBER}
-                    docker push $DOCKER_REGISTRY/dotnet:${BUILD_NUMBER}
-                '''
+                    sh """
+                    docker tag "${dockerImageName}:${BUILD_NUMBER}" "$DOCKER_REGISTRY/${dockerImageName}:${BUILD_NUMBER}"
+                    docker push "$DOCKER_REGISTRY/${dockerImageName}:${BUILD_NUMBER}"
+                """
                 }
             }
         }
