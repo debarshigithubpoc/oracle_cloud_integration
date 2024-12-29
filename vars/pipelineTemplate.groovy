@@ -16,6 +16,10 @@ def call(String branchName, String terraformDir, String agentLabel) {
             pollSCM('* * * * *') // This will poll the SCM every 1 minute
         }
 
+        tools {
+            git 'Default'
+        }
+
         stages {
             stage('Checkout') {
                 when {
