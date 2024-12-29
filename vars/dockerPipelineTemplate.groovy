@@ -104,7 +104,7 @@ pipeline {
                 }
             }
             steps {
-                withCredentials([string(credentialsId: 'dockerregistry', variable: 'DOCKER_REGISTRY')]) {
+                withCredentials([string(credentialsId: 'dockerRegistrySecret', variable: 'DOCKER_REGISTRY')]) {
                     sh """
                     docker tag "${dockerImageName}:${BUILD_NUMBER}" "$DOCKER_REGISTRY/${dockerImageName}:${BUILD_NUMBER}"
                     docker push "$DOCKER_REGISTRY/${dockerImageName}:${BUILD_NUMBER}"
