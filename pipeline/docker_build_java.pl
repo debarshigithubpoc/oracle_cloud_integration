@@ -46,7 +46,7 @@ pipeline {
                 }
             }
             steps {
-                withCredentials([string(credentialsId: 'dockerregistry', variable: 'DOCKER_REGISTRY'),
+                withCredentials([string(credentialsId: 'dockerRegistry', variable: 'DOCKER_REGISTRY'),
                                  string(credentialsId: 'dockerUsername', variable: 'DOCKER_USERNAME'),
                                  string(credentialsId: 'dockerPassword', variable: 'DOCKER_PASSWORD')]) {
                     sh '''
