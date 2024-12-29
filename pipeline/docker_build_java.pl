@@ -24,7 +24,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'development'
-                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/JavaDocker') } } }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
             }
             steps {
@@ -42,15 +42,19 @@ pipeline {
             when {
                 anyOf {
                     branch 'development'
-                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/JavaDocker') } } }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
             }
             steps {
-                sh '''
-                    cd "/home/jenkins/workspace/docker_build_image/oracle_cloud_integration/Applications/JavaDocker"
-                    docker login HYD.ocir.io/ax4qhhyy6wvq/privateregistry --username 'ax4qhhyy6wvq/debarshi.eee@gmail.com' --password 'YS1i2<[VrEMLXTQjmstb'
-                    docker build . -t java:${BUILD_NUMBER}
-                '''
+                withCredentials([string(credentialsId: 'dockerregistry', variable: 'DOCKER_REGISTRY'),
+                                 string(credentialsId: 'dockerUsername', variable: 'DOCKER_USERNAME'),
+                                 string(credentialsId: 'dockerPassword', variable: 'DOCKER_PASSWORD')]) {
+                    sh '''
+                        cd "/home/jenkins/workspace/docker_build_image/oracle_cloud_integration/Applications/JavaDocker"
+                        docker login $DOCKER_REGISTRY --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+                        docker build . -t java:${BUILD_NUMBER}
+                    '''
+                }
             }
         }
         
@@ -58,7 +62,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'development'
-                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/JavaDocker') } } }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
             }
             steps {
@@ -70,14 +74,16 @@ pipeline {
             when {
                 anyOf {
                     branch 'development'
-                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/JavaDocker') } } }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
             }
             steps {
-                sh '''
-                    docker tag java:${BUILD_NUMBER} HYD.ocir.io/ax4qhhyy6wvq/privateregistry/java:${BUILD_NUMBER}
-                    docker push HYD.ocir.io/ax4qhhyy6wvq/privateregistry/java:${BUILD_NUMBER}
-                '''
+                withCredentials([string(credentialsId: 'dockerregistry', variable: 'DOCKER_REGISTRY')]) {
+                    sh '''
+                        docker tag java:${BUILD_NUMBER} $DOCKER_REGISTRY/java:${BUILD_NUMBER}
+                        docker push $DOCKER_REGISTRY/java:${BUILD_NUMBER}
+                    '''
+                }
             }
         }
 
@@ -85,7 +91,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'development'
-                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/JavaDocker') } } }
+                    expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith('Applications/DotnetDocker/dotnethelloworld') } } }
                 }
             }
             steps {
