@@ -5,34 +5,40 @@ pipeline {
 
     stages {
         stage('Development') {
-            when {
-                branch 'development'
-            }
             steps {
                 script {
-                    terraformUnifiedTemplate('development', 'Terraform/main/dev', 'windows')
+                    terraformUnifiedTemplate('Terraform/main/dev', 'windows')
                 }
             }
         }
-        stage('Main') {
-            when {
-                branch 'main'
-            }
+
+        stage('Approval') {
             steps {
-                script {
-                    terraformUnifiedTemplate('main', 'Terraform/main/prod', 'windows')
-                }
+                input message: 'Review the dev environment and promote it to staging environment'
             }
         }
+
         stage('Staging') {
-            when {
-                branch 'staging'
-            }
             steps {
                 script {
-                    terraformUnifiedTemplate('staging', 'Terraform/main/staging', 'windows')
+                    terraformUnifiedTemplate('Terraform/main/staging', 'windows')
                 }
             }
         }
+
+        stage('Approval') {
+            steps {
+                input message: 'Review the staging environment and promote it to production environment'
+            }
+        }
+
+        stage('Production') {
+            steps {
+                script {
+                    terraformUnifiedTemplate('Terraform/main/prod', 'windows')
+                }
+            }
+        }
+
     }
 }
