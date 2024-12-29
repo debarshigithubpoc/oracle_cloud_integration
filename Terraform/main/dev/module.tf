@@ -62,3 +62,4 @@ module "kubernetes" {
   depends_on                                 = [module.subnet]
 }
 
+

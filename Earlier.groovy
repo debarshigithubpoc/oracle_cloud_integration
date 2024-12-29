@@ -1,3 +1,4 @@
+// vars/pipelineTemplate.groovy
 def call(String branchName, String terraformDir, String agentLabel) {
     pipeline {
         agent { label agentLabel }
@@ -24,7 +25,7 @@ def call(String branchName, String terraformDir, String agentLabel) {
                 when {
                     anyOf {
                         branch branchName
-                        expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.items.any { it.affectedPaths.any { it.startsWith(terraformDir) } } } }
+                        expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(terraformDir) } } }
                     }
                 }
                 steps {
@@ -32,7 +33,7 @@ def call(String branchName, String terraformDir, String agentLabel) {
                         if exist "%WORKSPACE_DIR%" rmdir /s /q "%WORKSPACE_DIR%"
                         mkdir "%WORKSPACE_DIR%"
                         cd "%WORKSPACE_DIR%"
-                        git clone -b ${branchName} %GITHUB_REPO% 
+                        git clone -b "${branchName}" %GITHUB_REPO% 
                     """
                 }
             }
@@ -41,7 +42,7 @@ def call(String branchName, String terraformDir, String agentLabel) {
                 when {
                     anyOf {
                         branch branchName
-                        expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.items.any { it.affectedPaths.any { it.startsWith(terraformDir) } } } }
+                        expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(terraformDir) } } }
                     }
                 }
                 steps {
@@ -56,7 +57,7 @@ def call(String branchName, String terraformDir, String agentLabel) {
                 when {
                     anyOf {
                         branch branchName
-                        expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.items.any { it.affectedPaths.any { it.startsWith(terraformDir) } } } }
+                        expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(terraformDir) } } }
                     }
                 }
                 steps {
@@ -72,7 +73,7 @@ def call(String branchName, String terraformDir, String agentLabel) {
                 when {
                     anyOf {
                         branch branchName
-                        expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.items.any { it.affectedPaths.any { it.startsWith(terraformDir) } } } }
+                        expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(terraformDir) } } }
                     }
                 }
                 steps {
@@ -87,7 +88,7 @@ def call(String branchName, String terraformDir, String agentLabel) {
                 when {
                     anyOf {
                         branch branchName
-                        expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.items.any { it.affectedPaths.any { it.startsWith(terraformDir) } } } }
+                        expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(terraformDir) } } }
                     }
                 }
                 steps {
@@ -99,7 +100,7 @@ def call(String branchName, String terraformDir, String agentLabel) {
                 when {
                     anyOf {
                         branch branchName
-                        expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.items.any { it.affectedPaths.any { it.startsWith(terraformDir) } } } }
+                        expression { return params.FORCE_RUN || currentBuild.changeSets.any { it.affectedFiles.any { it.path.startsWith(terraformDir) } } }
                     }
                 }
                 steps {
