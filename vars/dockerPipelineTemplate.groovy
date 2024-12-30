@@ -149,10 +149,13 @@ pipeline {
                                  string(credentialsId: dockerUsernameSecret, variable: 'DOCKER_USERNAME'),
                                  string(credentialsId: dockerPassSecret, variable: 'DOCKER_SECRET')]) {
                     sh """
-                    kubectl get pods
+                    export PATH=$PATH:/home/jenkins/bin
+                    source ~/.bashrc
+                    oci -v
+                    kubectl get pods -A
                     kubectl create secret docker-registry "${DOCKER_REGISTRY}" --docker-server="hyd.ocir.io" --docker-username="${DOCKER_USERNAME}" --docker-password="${DOCKER_SECRET}" --docker-email="debarshi.eee@gmail.com"
                     kubectl run testingpod --image="${DOCKER_REGISTRY}/${dockerImageName}:${BUILD_NUMBER}" --image-pull-secret="docker-registry"
-                    kubectl get pods
+                    kubectl get pods -A
                 """
                 }
             }
