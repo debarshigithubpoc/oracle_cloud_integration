@@ -73,3 +73,14 @@ To configure
 - docker build . -t dotnet:v1
 - docker tag -t HYD.ocir.io/ax4qhhyy6wvq/privateregistry dotnet:v1
 - docker push HYD.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:v1
+
+## setup Kubernetes 
+- sudo yum install kubectl -y
+- Install oci cli tool
+- bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"
+- export PATH=$PATH:/home/jenkins/bin
+- source ~/.bashrc
+- oci --version
+- oci ce cluster create-kubeconfig --cluster-id ocid1.cluster.oc1.ap-hyderabad-1.aaaaaaaacph6wj4vawfoxm6ncgurr2vahr6s4qfmowwkjgzfecd5k4ibnqya --file $HOME/.kube/config --region ap-hyderabad-1 --token-version 2.0.0  --kube-endpoint PUBLIC_ENDPOINT
+- vi /home/jenkins/.oci/config > change the fingerprint
+- rm /home/jenkins/.oci/oci_api_key.pem replace the pem file with the correct pem file vi /home/jenkins/.oci/oci_api_key.pem with correct signature 
