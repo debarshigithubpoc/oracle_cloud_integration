@@ -129,7 +129,34 @@ pipeline {
                     echo "Docker cleanup completed!"
                 '''
             }
-        }        
+        }
+
+        stage('Kubernetes Pod Creation') {
+            when {
+                anyOf {
+                    branch branchName
+                    expression { 
+                        return params.FORCE_RUN || currentBuild.changeSets.any { changeSet ->
+                            changeSet.items.any { item ->
+                                item.affectedFiles.any { it.path.startsWith(dockerDirectory) }
+                            }
+                        }
+                    }
+                }
+            }
+            steps {
+                withCredentials([string(credentialsId: dockerRegistrySecret, variable: 'DOCKER_REGISTRY'),
+                                 string(credentialsId: dockerUsernameSecret, variable: 'DOCKER_USERNAME'),
+                                 string(credentialsId: dockerPassSecret, variable: 'DOCKER_SECRET')]) {
+                    sh """
+                    kubectl get pods
+                    kubectl create secret docker-registry "${DOCKER_REGISTRY}" --docker-server="hyd.ocir.io" --docker-username="${DOCKER_USERNAME}" --docker-password="${DOCKER_SECRET}" --docker-email="debarshi.eee@gmail.com"
+                    kubectl run testingpod --image="${DOCKER_REGISTRY}/${dockerImageName}:${BUILD_NUMBER}" --image-pull-secret="docker-registry"
+                    kubectl get pods
+                """
+                }
+            }
+        }            
     }
     
     post {
