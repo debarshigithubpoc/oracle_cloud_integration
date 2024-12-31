@@ -72,7 +72,7 @@ pipeline {
             }
         }
         
-        stage('Approval') {
+        stage('Approval for pushing the artifact to OCI registry') {
             when {
                 anyOf {
                     branch branchName
@@ -131,7 +131,7 @@ pipeline {
             }
         }
 
-        stage('Kubernetes Pod Creation') {
+        stage('Approval for Deploying in OCI Kubernetes Cluster') {
             when {
                 anyOf {
                     branch branchName
@@ -145,17 +145,35 @@ pipeline {
                 }
             }
             steps {
-                withCredentials([string(credentialsId: dockerRegistrySecret, variable: 'DOCKER_REGISTRY'),
-                                 string(credentialsId: dockerUsernameSecret, variable: 'DOCKER_USERNAME'),
+                input message: 'Review the docker image build before pushing to container registry'
+            }
+        }
+
+        stage('Kubernetes Deployment Creation') {
+            when {
+                anyOf {
+                    branch branchName
+                    expression { 
+                        return params.FORCE_RUN || currentBuild.changeSets.any { changeSet ->
+                            changeSet.items.any { item ->
+                                item.affectedFiles.any { it.path.startsWith(dockerDirectory) }
+                            }
+                        }
+                    }
+                }
+            }
+            steps {
+                withCredentials([string(credentialsId: dockerUsernameSecret, variable: 'DOCKER_USERNAME'),
                                  string(credentialsId: dockerPassSecret, variable: 'DOCKER_SECRET')]) {
                     sh """
                     export PATH=$PATH:/home/jenkins/bin
                     source ~/.bashrc
                     oci -v
-                    kubectl get pods -A
-                    kubectl create secret docker-registry "${DOCKER_REGISTRY}" --docker-server="hyd.ocir.io" --docker-username="${DOCKER_USERNAME}" --docker-password="${DOCKER_SECRET}" --docker-email="debarshi.eee@gmail.com"
-                    kubectl run testingpod --image="${DOCKER_REGISTRY}/${dockerImageName}:${BUILD_NUMBER}" --image-pull-secret="docker-registry"
-                    kubectl get pods -A
+                    kubectl create secret docker-registry ocirsecret --docker-server=hyd.ocir.io --docker-username="${DOCKER_USERNAME}" --docker-password="${DOCKER_SECRET}" --docker-email='debarshi.eee@gmail.com'
+                    cd "/home/jenkins/workspace/docker_build_image/oracle_cloud_integration/kubernetes/helmcharts"
+                    helm upgrade --install "dotnethellorelease" ./dotnethelloworld/ --set image.tag="${BUILD_NUMBER}"
+                    helm list
+                    kubectl get all
                 """
                 }
             }

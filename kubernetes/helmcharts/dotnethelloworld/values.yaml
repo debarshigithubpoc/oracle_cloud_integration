@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: hyd.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet
+  tag: "81"
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 8080
+
+imagePullSecrets:
+  - name: ocirsecret
+
+nameOverride: ""
+fullnameOverride: ""
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
