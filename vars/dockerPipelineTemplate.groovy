@@ -1,5 +1,5 @@
 // vars/dockerPipelineTemplate.groovy
-def call(String branchName, String dockerDirectory, String dockerImageName, String agentLabel, String dockerRegistrySecret , String dockerUsernameSecret, String dockerPassSecret) {
+def call(String branchName, String dockerDirectory, String dockerImageName, String agentLabel, String dockerRegistrySecret , String dockerUsernameSecret, String dockerPassSecret, String helmRelease, String helmPath) {
 pipeline {
     agent { label agentLabel }
     
@@ -171,7 +171,7 @@ pipeline {
                     oci -v
                     kubectl create secret docker-registry ocirsecret --docker-server=hyd.ocir.io --docker-username="${DOCKER_USERNAME}" --docker-password="${DOCKER_SECRET}" --docker-email='debarshi.eee@gmail.com'
                     cd "/home/jenkins/workspace/docker_build_image/oracle_cloud_integration/kubernetes/helmcharts"
-                    helm upgrade --install "dotnethellorelease" ./dotnethelloworld/ --set image.tag="${BUILD_NUMBER}"
+                    helm upgrade --install "${helmRelease}" "${helmPath}" --set image.tag="${BUILD_NUMBER}"
                     helm list
                     kubectl get all
                 """
