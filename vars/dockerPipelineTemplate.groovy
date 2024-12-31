@@ -145,7 +145,7 @@ pipeline {
                 }
             }
             steps {
-                input message: 'Review the docker image build before pushing to container registry'
+                input message: 'Review the steps before deploying it in kubernetes cluster'
             }
         }
 
