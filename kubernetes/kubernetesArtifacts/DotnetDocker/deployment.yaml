@@ -15,6 +15,13 @@ spec:
       containers:
       - name: dotnethelloworld   
         image: hyd.ocir.io/ax4qhhyy6wvq/privateregistry/dotnet:81
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
         ports:
         - containerPort: 8080
       imagePullSecrets:
