@@ -16,7 +16,7 @@ resource "oci_core_instance" "core_instance" {
   }
 
   metadata = {
-    ssh_authorized_keys = file(each.value.ssh_authorized_keys_path)
+    ssh_authorized_keys = file("${path.module}/each.value.ssh_authorized_keys_path")
   }
 }
 
